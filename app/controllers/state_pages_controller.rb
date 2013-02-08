@@ -1,0 +1,2 @@
+class StatePagesController < ApplicationController
+end
