@@ -12,11 +12,13 @@ describe "User pages"  do
 end
 
 describe "profile page" do
-	let(:user) { FatoryGirl.create(:user) }
+	let(:user) { FactoryGirl.create(:user) }
 	before { visit user_path(user) }
 
-	it { should have_selector('h1',       text: user.name) }
-	it { should have_selector('title',    text: user.name) }
+	it { should have_selector('h1',    text: user.name) }
+    it { should have_selector('title', text: user.name) }
+
+end
 
 describe "signup" do
 
@@ -26,7 +28,7 @@ describe "signup" do
 
 	describe "with invalid information" do
 		it "should not create a user" do
-			except { click_button submit }.not_to change(User, :count)
+			expect { click_button submit }.not_to change(User, :count)
 		end
 	end
 
@@ -39,8 +41,13 @@ describe "signup" do
 		end
 
 		it "should create a user" do
-			except { click_button }.to change(User, :count).by(1)
+			expect { click_button submit }.to change(User, :count).by(1)
+		end
+
+		describe "after saving the user" do
+
+			it { should have_link('Sign out') }
 		end
 	end
-end
+
 end
